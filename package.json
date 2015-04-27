@@ -2,7 +2,7 @@
   "name": "agendra",
   "version": "1.0.0",
   "description": "simple app to manage my agenda",
-  "main": "index.js",
+  "main": "boot.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -14,6 +14,7 @@
   "author": "Erik Ostrom <erik@echographia.com>",
   "license": "ISC",
   "dependencies": {
+    "babel": "^5.1.13",
     "express": "^4.12.3"
   }
 }
