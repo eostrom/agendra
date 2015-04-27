@@ -1,0 +1,19 @@
+{
+  "name": "agendra",
+  "version": "1.0.0",
+  "description": "simple app to manage my agenda",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "agenda",
+    "to-do",
+    "idiosyncratic"
+  ],
+  "author": "Erik Ostrom <erik@echographia.com>",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.12.3"
+  }
+}
