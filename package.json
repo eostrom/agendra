@@ -4,7 +4,7 @@
   "description": "simple app to manage my agenda",
   "main": "boot.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/mocha --harmony --compilers js:babel/register"
   },
   "keywords": [
     "agenda",
@@ -16,5 +16,9 @@
   "dependencies": {
     "babel": "^5.1.13",
     "express": "^4.12.3"
+  },
+  "devDependencies": {
+    "mocha": "^2.2.4",
+    "zombie": "^4.0.10"
   }
 }
