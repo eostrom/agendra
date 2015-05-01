@@ -28,3 +28,7 @@ node_modules
 
 # IDE configuration
 .idea
+
+# RVM configuration (used for Overcommit)
+.ruby-version
+.ruby-gemset
