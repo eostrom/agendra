@@ -9,7 +9,7 @@ describe('Temporary home page', () => {
     return this.browser.visit('/');
   });
 
-  it('finds the latest journal entry', function() {
-    this.browser.assert.text('body', '2012-05-06.md');
+  it('displays the latest journal entry', function() {
+    this.browser.assert.text('body', /Zombie, Casper, and Nightmare/);
   });
 });
