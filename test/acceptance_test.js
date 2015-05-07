@@ -9,7 +9,7 @@ describe('Temporary home page', () => {
     return this.browser.visit('/');
   });
 
-  it('displays information about the Dropbox folder', function() {
-    this.browser.assert.text('body', /Files found: 1/i);
+  it('finds the latest journal entry', function() {
+    this.browser.assert.text('body', '2012-05-06.md');
   });
 });

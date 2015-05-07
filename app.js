@@ -9,13 +9,14 @@ client.authDriver(new Dropbox.AuthDriver.NodeServer(8191));
 let app = express();
 
 app.get('/', (req, res) => {
-  client.readdir('/', function(error, entries) {
+  client.readdir('/', (error, entries) => {
     if (error) {
       console.log(error);
       return res.send(error.response.error);
     }
 
-    return res.send(`Files found: ${entries.length}`);
+    const journals = entries.filter(e => /^[0-9-]*\.md$/.test(e));
+    return res.send(journals.pop());
   });
 });
 
