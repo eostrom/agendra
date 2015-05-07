@@ -1,3 +1,5 @@
+require('dotenv').load('.env');
+
 let browserContext = require('./browserContext');
 
 describe('Temporary home page', () => {
@@ -7,7 +9,7 @@ describe('Temporary home page', () => {
     return this.browser.visit('/');
   });
 
-  it('renders a Hello World page', function() {
-    this.browser.assert.text('body', /Hello,? world!/i);
+  it('displays information about the Dropbox folder', function() {
+    this.browser.assert.text('body', /Files found: 1/i);
   });
 });

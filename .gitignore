@@ -32,3 +32,6 @@ node_modules
 # RVM configuration (used for Overcommit)
 .ruby-version
 .ruby-gemset
+
+# local developer configuration
+.env
