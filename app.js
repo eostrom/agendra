@@ -1,4 +1,5 @@
 let express = require('express'),
+  markdown = require('markdown').markdown,
   Dropbox = require('dropbox');
 
 let client = new Dropbox.Client({
@@ -7,6 +8,7 @@ let client = new Dropbox.Client({
 client.authDriver(new Dropbox.AuthDriver.NodeServer(8191));
 
 let app = express();
+app.set('view engine', 'jade');
 
 app.get('/', (req, res) => {
   client.readdir('/', (dirError, entries, dirstat, filestats) => {
@@ -24,7 +26,10 @@ app.get('/', (req, res) => {
         return res.send(fileError.response.error);
       }
 
-      return res.send(contents);
+      res.render('show', {
+        title: latest.name.replace(/.md$/, ''),
+        body: markdown.toHTML(contents)
+      });
     });
   });
 });
