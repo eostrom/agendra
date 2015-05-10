@@ -2,16 +2,20 @@ require('dotenv').load('.env');
 
 let browserContext = require('./browserContext');
 
-describe('Temporary home page', () => {
+describe('Home page', () => {
   browserContext();
 
   beforeEach(function() {
     return this.browser.visit('/');
   });
 
-  it('displays the latest journal entry', function() {
-    this.browser.assert.text('body', /Zombie, Casper, and Nightmare/);
-    this.browser.assert.text('h1', /What about tomorrow\?/);
+  it('uses the date as a page title', function() {
     this.browser.assert.text('title', '2012-05-06');
+  });
+
+  it('displays only the agenda', function() {
+    this.browser.assert.element('body > ul');
+    this.browser.assert.elements('h1', 0);
+    this.browser.assert.text('li', /agenda app/);
   });
 });

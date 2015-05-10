@@ -8,6 +8,7 @@
   },
   "rules": {
     "strict": "global",
+    "no-unused-vars": [1, {"args": "after-used"}],
     "quotes": [1, "single", "avoid-escape"]
   }
 }

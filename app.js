@@ -26,9 +26,29 @@ app.get('/', (req, res) => {
         return res.send(fileError.response.error);
       }
 
+      let [_, ...toplevels] = markdown.parse(contents);
+      toplevels = toplevels[Symbol.iterator]();
+
+      // Note: Not all JsonML can be destructured this way, but the
+      // headers we care about can.
+      for (let [tagname, attrs, text] of toplevels) {
+        if (tagname === 'header' && attrs.level === 1
+          && text.includes('tomorrow')
+        ) {
+          break;
+        }
+      }
+
+      let section = [];
+      for (let element of toplevels) {
+        let [tagname, attrs] = element;
+        if (tagname === 'header' && attrs.level === 1) { break; }
+        section.push(element);
+      }
+
       res.render('show', {
         title: latest.name.replace(/.md$/, ''),
-        body: markdown.toHTML(contents)
+        body: markdown.toHTML(['markdown', ...section])
       });
     });
   });
