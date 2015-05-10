@@ -11,7 +11,7 @@ let app = express();
 app.set('view engine', 'jade');
 
 app.get('/', (req, res) => {
-  client.readdir('/', (dirError, entries, dirstat, filestats) => {
+  client.readdir(process.env.AGENDRA_JOURNAL_PATH, (dirError, entries, dirstat, filestats) => {
     if (dirError) {
       console.log(dirError);
       return res.send(dirError.response.error);

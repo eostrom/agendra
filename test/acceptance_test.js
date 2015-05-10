@@ -1,4 +1,5 @@
-require('dotenv').load('.env');
+let dotenv = require('dotenv');
+dotenv.load({path: '.env.test'});
 
 let browserContext = require('./browserContext');
 
