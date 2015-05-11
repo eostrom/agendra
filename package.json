@@ -4,6 +4,7 @@
   "description": "simple app to manage my agenda",
   "main": "boot.js",
   "scripts": {
+    "start": "node boot.js",
     "test": "./node_modules/.bin/mocha --harmony --compilers js:babel/register"
   },
   "keywords": [
