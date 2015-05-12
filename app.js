@@ -1,6 +1,7 @@
 let express = require('express'),
   markdown = require('markdown').markdown,
-  Dropbox = require('dropbox');
+  Dropbox = require('dropbox'),
+  Journal = require('./journal');
 
 let client = new Dropbox.Client({
   token: process.env.DROPBOX_AUTH_TOKEN
@@ -26,25 +27,8 @@ app.get('/', (req, res) => {
         return res.send(fileError.response.error);
       }
 
-      let [_, ...toplevels] = markdown.parse(contents);
-      toplevels = toplevels[Symbol.iterator]();
-
-      // Note: Not all JsonML can be destructured this way, but the
-      // headers we care about can.
-      for (let [tagname, attrs, text] of toplevels) {
-        if (tagname === 'header' && attrs.level === 1
-          && text.includes('tomorrow')
-        ) {
-          break;
-        }
-      }
-
-      let section = [];
-      for (let element of toplevels) {
-        let [tagname, attrs] = element;
-        if (tagname === 'header' && attrs.level === 1) { break; }
-        section.push(element);
-      }
+      let entry = new Journal.Entry(contents);
+      let section = entry.section({header: /tomorrow/});
 
       res.render('show', {
         title: latest.name.replace(/.md$/, ''),
