@@ -1,4 +1,5 @@
-# Agendra: What I'm going to do today
+# Agendra: What I'm going to do today [![Code Climate](https://codeclimate.com/github/eostrom/agendra/badges/gpa.svg)](https://codeclimate.com/github/eostrom/agendra)
+
 
 This is a simple web app that I use to remind myself what I mean to
 do today. I don't expect it to be useful to anyone else, because it's
@@ -76,6 +77,7 @@ this too, put your test configuration in `.env.test`. Settings in
 The tests expect that Dropbox folder to contain some specific files.
 Again, if anyone ever asks, I'll make a version of those files
 available.
+
 
 [meta]: http://metawidget.org/
 [clone]: http://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository
