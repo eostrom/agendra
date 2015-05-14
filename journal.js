@@ -5,6 +5,25 @@ class Section {
     this.jsonMLElements = jsonMLElements;
   }
 
+  simplify () {
+    // Here, we assume that the section contains a single list.
+    let [[list, ...items]] = this.jsonMLElements;
+
+    return new Section([
+      [
+        list,
+        ...items.map(([item, ...children]) => {
+          return [
+            item,
+            children.filter((child) => {
+              return typeof child === 'string';
+            }).join('')
+          ];
+        })
+      ]
+    ]);
+  }
+
   toHTML () {
     return markdown.toHTML(['markdown', ...this.jsonMLElements]);
   }

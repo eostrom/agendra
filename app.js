@@ -34,7 +34,7 @@ app.get('/', async (req, res) => {
 
   res.render('show', {
     title: latest.name.replace(/.md$/, ''),
-    body: section.toHTML()
+    body: section.simplify().toHTML()
   });
 });
 

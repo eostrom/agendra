@@ -10,6 +10,7 @@ Section 2
 =========
 
 * Section 2 contains a list.
+  * A nested list.
 `.trim();
 
 
@@ -31,6 +32,17 @@ describe('Journal Section', () => {
       let section = new Journal.Entry(text).section(/Section 2/);
 
       assert.strictEqual(section.toHTML(),
+        '<ul><li>Section 2 contains a list.<ul><li>A nested list.</li></ul></li></ul>'
+      );
+    });
+  });
+
+  describe('simplify()', () => {
+    it('returns a section containing a single-level list', () => {
+      let simplifiedSection =
+        new Journal.Entry(text).section(/Section 2/).simplify();
+
+      assert.strictEqual(simplifiedSection.toHTML(),
         '<ul><li>Section 2 contains a list.</li></ul>'
       );
     });
