@@ -17,6 +17,6 @@ describe('Home page', () => {
   it('displays only the agenda', function() {
     this.browser.assert.element('body > ul');
     this.browser.assert.elements('h1', 0);
-    this.browser.assert.text('li', /agenda app/);
+    this.browser.assert.text('li', /agenda app refactoring/);
   });
 });

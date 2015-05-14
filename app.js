@@ -30,7 +30,7 @@ app.get('/', async (req, res) => {
   }
 
   let entry = new Journal.Entry(contents);
-  let section = entry.section({header: /tomorrow/});
+  let section = entry.section(/tomorrow/);
 
   res.render('show', {
     title: latest.name.replace(/.md$/, ''),
