@@ -1,10 +1,7 @@
-let assert = require('assert'),
+let assert = require('chai').assert,
   Journal = require('../journal');
 
-describe('Journal Entry', () => {
-  describe('section()', () => {
-    it('finds a section whose header matches a regexp', () => {
-      let text = `
+let text = `
 # Section 1
 
 Here is the text of section 1.
@@ -13,12 +10,29 @@ Section 2
 =========
 
 * Section 2 contains a list.
-    `.trim();
+`.trim();
+
+
+describe('Journal Entry', () => {
+  describe('section()', () => {
+    it('finds a section whose header matches a regexp', () => {
       let entry = new Journal.Entry(text);
 
-      assert(entry.section(/Section 1/));
-      assert(entry.section(/section 2/i));
-      assert(!entry.section(/anything else/));
+      assert.instanceOf(entry.section(/Section 1/), Journal.Section);
+      assert.instanceOf(entry.section(/section 2/i), Journal.Section);
+      assert.notOk(entry.section(/anything else/));
+    });
+  });
+});
+
+describe('Journal Section', () => {
+  describe('toHTML()', () => {
+    it('transforms the JsonML elements to HTML', () => {
+      let section = new Journal.Entry(text).section(/Section 2/);
+
+      assert.strictEqual(section.toHTML(),
+        '<ul><li>Section 2 contains a list.</li></ul>'
+      );
     });
   });
 });

@@ -1,11 +1,21 @@
 let markdown = require('markdown').markdown;
 
+class Section {
+  constructor (jsonMLElements) {
+    this.jsonMLElements = jsonMLElements;
+  }
+
+  toHTML () {
+    return markdown.toHTML(['markdown', ...this.jsonMLElements]);
+  }
+}
+
 class Entry {
   constructor (contents) {
     this.contents = contents;
   }
 
-  section(regexp) {
+  section (regexp) {
     let [_, ...toplevels] = markdown.parse(this.contents);
     toplevels = toplevels[Symbol.iterator]();
     let found = false;
@@ -30,10 +40,11 @@ class Entry {
       section.push(element);
     }
 
-    return section;
+    return new Section(section);
   }
 }
 
 module.exports = {
-  Entry: Entry
+  Entry: Entry,
+  Section: Section
 };
