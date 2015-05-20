@@ -1,6 +1,4 @@
 let express = require('express'),
-  moment = require('moment'),
-  markdown = require('markdown').markdown,
   Dropbox = require('dropbox'),
   Promisebox = require('./promisebox'),
   Journal = require('./journal');
@@ -15,24 +13,17 @@ let app = express();
 app.set('view engine', 'jade');
 
 app.get('/', async (req, res) => {
-  let contents, date;
+  let entry;
 
   try {
-    const [entries, dirstat, filestats] =
-      await client.readdir(process.env.AGENDRA_JOURNAL_PATH);
-    const journals = filestats.filter(e => /^[0-9-]*\.md$/.test(e.name)),
-      latest = journals.pop();
-
-    date = moment.utc(latest.name.replace(/.md$/, ''));
-    contents =
-      await client.readFile(latest.path);
+    const journal = new Journal(client, process.env.AGENDRA_JOURNAL_PATH);
+    entry = await journal.latest();
   } catch (error) {
      console.log(error);
      return res.send(error.response ? error.response.error : error);
   }
 
-  let entry = new Journal.Entry({contents, date});
-  let section = entry.section(/tomorrow/);
+  const section = entry.section(/tomorrow/);
 
   res.render('show', {
     title: entry.date.format('LL'),

@@ -1,4 +1,5 @@
-let markdown = require('markdown').markdown;
+let moment = require('moment'),
+  markdown = require('markdown').markdown;
 
 class Section {
   constructor (jsonMLElements) {
@@ -63,7 +64,28 @@ class Entry {
   }
 }
 
-module.exports = {
-  Entry: Entry,
-  Section: Section
-};
+class Journal {
+  constructor (dropbox, path) {
+    Object.assign(this, {dropbox, path});
+  }
+
+  async latest () {
+    const entries = await this._entryFilestats(),
+      latest = entries.pop(),
+      date = moment.utc(latest.name.replace(/.md$/, '')),
+      contents = await this.dropbox.readFile(latest.path);
+
+    return new Entry({contents, date});
+  }
+
+  async _entryFilestats () {
+    const [_filenames, _dirstat, filestats] =
+      await this.dropbox.readdir(this.path);
+
+    return filestats.filter(e => /^[0-9-]*\.md$/.test(e.name));
+  }
+}
+
+Object.assign(Journal, {Entry, Section});
+
+module.exports = Journal;

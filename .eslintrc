@@ -9,6 +9,7 @@
   "rules": {
     "strict": "global",
     "no-unused-vars": [1, {"args": "after-used"}],
+    "no-underscore-dangle": false,
     "quotes": [1, "single", "avoid-escape"]
   }
 }
