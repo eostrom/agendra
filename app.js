@@ -1,4 +1,5 @@
 let express = require('express'),
+  moment = require('moment'),
   markdown = require('markdown').markdown,
   Dropbox = require('dropbox'),
   Promisebox = require('./promisebox'),
@@ -22,7 +23,7 @@ app.get('/', async (req, res) => {
     const journals = filestats.filter(e => /^[0-9-]*\.md$/.test(e.name)),
       latest = journals.pop();
 
-    date = new Date(latest.name.replace(/.md$/, ''));
+    date = moment.utc(latest.name.replace(/.md$/, ''));
     contents =
       await client.readFile(latest.path);
   } catch (error) {
@@ -34,7 +35,7 @@ app.get('/', async (req, res) => {
   let section = entry.section(/tomorrow/);
 
   res.render('show', {
-    title: entry.date.toLocaleDateString(),
+    title: entry.date.format('LL'),
     body: section.simplify().toHTML()
   });
 });

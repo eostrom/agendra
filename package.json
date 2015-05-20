@@ -20,7 +20,8 @@
     "dropbox": "^0.10.3",
     "express": "^4.12.3",
     "jade": "^1.9.2",
-    "markdown": "^0.5.0"
+    "markdown": "^0.5.0",
+    "moment": "^2.10.3"
   },
   "devDependencies": {
     "babel-eslint": "^3.1.1",
