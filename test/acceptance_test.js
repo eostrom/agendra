@@ -11,7 +11,7 @@ describe('Home page', () => {
   });
 
   it('uses the date as a page title', function() {
-    this.browser.assert.text('title', '2012-05-06');
+    this.browser.assert.text('title', 'Saturday, May 05, 2012');
   });
 
   it('displays only the agenda', function() {

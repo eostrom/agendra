@@ -30,8 +30,8 @@ class Section {
 }
 
 class Entry {
-  constructor (contents) {
-    this.contents = contents;
+  constructor (attrs) {
+    Object.assign(this, attrs);
   }
 
   section (regexp) {

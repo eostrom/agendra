@@ -14,14 +14,15 @@ let app = express();
 app.set('view engine', 'jade');
 
 app.get('/', async (req, res) => {
-  let latest = null, contents = null;
+  let contents, date;
 
   try {
     const [entries, dirstat, filestats] =
       await client.readdir(process.env.AGENDRA_JOURNAL_PATH);
-    const journals = filestats.filter(e => /^[0-9-]*\.md$/.test(e.name));
+    const journals = filestats.filter(e => /^[0-9-]*\.md$/.test(e.name)),
+      latest = journals.pop();
 
-    latest = journals.pop();
+    date = new Date(latest.name.replace(/.md$/, ''));
     contents =
       await client.readFile(latest.path);
   } catch (error) {
@@ -29,11 +30,11 @@ app.get('/', async (req, res) => {
      return res.send(error.response ? error.response.error : error);
   }
 
-  let entry = new Journal.Entry(contents);
+  let entry = new Journal.Entry({contents, date});
   let section = entry.section(/tomorrow/);
 
   res.render('show', {
-    title: latest.name.replace(/.md$/, ''),
+    title: entry.date.toLocaleDateString(),
     body: section.simplify().toHTML()
   });
 });
