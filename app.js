@@ -26,7 +26,7 @@ app.get('/', async (req, res) => {
   const section = entry.section(/tomorrow/);
 
   res.render('show', {
-    title: entry.date.format('LL'),
+    title: entry.date.clone().add(1, 'day').format('LL'),
     body: section.simplify().toHTML()
   });
 });
